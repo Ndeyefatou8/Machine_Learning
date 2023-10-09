@@ -1,0 +1,39 @@
+#Feature a garder, trie manuel (Valeurs doublons)
+
+'''
+#Surface reeel -> REgarder appartement
+#Nature culture -> A virer ?
+#Nombre de lots -> Peut-etre pertinent
+
+No disposition                0.000000 -> Ininteressant
+Date mutation                 0.000000 -> OK
+Nature mutation               0.000000 -> OK
+Valeur fonciere               0.000000 -> OK
+No voie                       3.213595 -> NOK
+Type de voie                 11.744926 -> OK -> Regarder la distrib stat, remplacer par le mode ou autre
+Code voie                     0.000000 -> NOK
+Voie                          0.000000  -> NOK
+Code postal                   0.012081  -> OK -> CAS particulier, droper les lignes
+Commune                       0.000000  -> OK
+Code departement              0.000000  -> OK
+Code commune                  0.000000  -> OK
+Section                       0.000000  -> NOK
+No plan                       0.000000  -> NOK
+1er lot                      48.415351  -> NOK
+Nombre de lots                0.000000  -> OK
+Code type local               0.000000  -> A regarder
+Type local                    0.000000  -> OK
+Surface reelle bati           0.128866  -> OK, attention dependance = 0 | A regarder
+Nombre pieces principales     0.128866  -> OK, a regarder | stat descriptive | Knn ?
+Nature culture               52.013531  -> OK
+Surface terrain              52.013531  -> A regarder 
+
+'''
+
+''''
+Données Open data
+latitude longitude -> voir la doc
+population la commune
+Categorie socio
+
+''''
