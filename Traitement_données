@@ -37,9 +37,15 @@ def traiter_df(dataframe,l_man = []):
     #Colonne Pourcentage de valeur vide
     perc = len(dataframe)*0.30 # >70%
     dataframe = dataframe.dropna(axis = 1, thresh = perc)
+    
     #Lignes
-    #dataframe = dataframe.dropna(axis =0, subset='Valeur fonciere') #Valeur cible nulle
-    dataframe = dataframe.dropna(axis = 0, subset='Type local') #Type local nul
+    dataframe = dataframe.dropna(axis =0, subset='Valeur fonciere') #Valeur cible nulle
+    dataframe = dataframe.dropna(axis = 0, subset='Type local') #Type local null
+    dataframe = dataframe.dropna(axis = 0, subset='Code postal') #Code postal null
+
+
+    
+    
     #Supprimer les doublons pour supprimer les dependances
     dataframe['discretisation'] = dataframe['Date mutation'].astype(str) + dataframe['Code voie'].astype(str) + dataframe['Voie'].astype(str) + dataframe['Commune'].astype(str)
     dataframe = dataframe.drop_duplicates(subset = 'discretisation', keep=False)
@@ -53,7 +59,14 @@ def traiter_df(dataframe,l_man = []):
 def fill_na_val(dataframe):
     #Type de voie (mode, Rue à 50% dans la distribution / 10% de remplissage de valuer manquante)
     dataframe['Type de voie'] = dataframe['Type de voie'].fillna(value = df['Type de voie'].mode()[0])
+    dataframe['Nature culture'] = dataframe['Nature culture'].map(lambda x: 1 if x =='S' else 0) # Binarisation, 1 si S sinon
+    dataframe['Type de voie'] = dataframe['Type de voie'].fillna(value = dataframe['Type de voie'].mode()[0])
+    dataframe['Surface reelle bati'] = dataframe['Surface reelle bati'].fillna(value = dataframe['Surface reelle bati'].median())
+    dataframe['Nombre pieces principales'] = dataframe['Nombre pieces principales'].fillna(value = 4) # mode
+    dataframe['Surface terrain'].loc[dataframe['Surface terrain'].isna() & (dataframe['Type local'] == 'Appartement')] = 0 #Remplacement des surface terrain par 0 pour le sappartements, et on vire les autres lignes valeurs vide
+    dataframe = dataframe.dropna(axis = 0, subset='Surface terrain') # On supprime les lignes sans valeur
 
+    return dataframe
 
 
 #### Appel de la methode
@@ -62,7 +75,13 @@ def fill_na_val(dataframe):
 #charge_ass_df(l_fichier).to_csv(path_or_buf= path + "concat.csv", sep = "|", )
 var_drop = ['No disposition', 'No voie', 'Code voie', 'Voie', 'Section','No plan','1er lot']
 df = charge_ass_df(l_fichier)
+print("sans na")
+print(df.shape)
+
 df = traiter_df(df, var_drop)
+print("na traité")
+
+df = fill_na_val(df)
 
 print(df.shape)
 print(df.isnull().sum()/len(df) *100)
