@@ -14,17 +14,21 @@ external_stylesheets = ['styles.css']  # Remplacez 'styles.css' par le nom de vo
 # Charger les données géographiques de la France
 world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
-
+#url git
+url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
 
 # Chargez le fichier CSV
-df = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat/concat.csv',sep='|')
+df = pd.read_csv(filepath_or_buffer= url ,sep='|', compression='zip')
 #print(df.columns)
 
 # Obtenez les valeurs uniques de la colonne "commune"
 commune_options = [{'label': commune, 'value': commune} for commune in df['Commune'].unique()]
 # Filtrez la géométrie de la France
 france = world[world['name'] == 'France']
+
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+server = app.server
 
 #TEST
 # Créez un exemple de données pour la courbe d'évolution (remplacez par vos données réelles)
