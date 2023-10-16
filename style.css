@@ -1,0 +1,12 @@
+/* styles.css */
+/* Styles for the side menu */
+body {
+    background-color: rgba(150, 90, 12, 0.648);
+}
+.sidebar {
+    float: left;
+}
+
+.main-content {
+    float: right;
+}
