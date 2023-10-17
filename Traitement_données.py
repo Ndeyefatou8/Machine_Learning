@@ -68,7 +68,7 @@ def fill_na_val(dataframe):
 
     return dataframe
 
-def remove_outlier(df):
+def remove_outlier_quartile(df):
     #drop valeur fonciere outlier
     Q1 = df['Valeur fonciere'].quantile(0.25)
     Q3 = df['Valeur fonciere'].quantile(0.75)
@@ -99,7 +99,36 @@ def remove_outlier(df):
 
     return df
 
+def remove_outlier_quartile(df):
+    #drop valeur fonciere outlier
+    Q1 = df['Valeur fonciere'].quantile(0.25)
+    Q3 = df['Valeur fonciere'].quantile(0.75)
+    IQR = Q3 - Q1
 
+    df = df[(df['Valeur fonciere'] >= Q1 - 1.5 * IQR) & (df['Valeur fonciere'] <= Q3 + 1.5 * IQR)]
+
+    #drop Surface réelle outlier
+    Q1 = df['Surface reelle bati'].quantile(0.25)
+    Q3 = df['Surface reelle bati'].quantile(0.75)
+    IQR = Q3 - Q1
+
+    df = df[(df['Surface reelle bati'] >= Q1 - 1.5 * IQR) & (df['Surface reelle bati'] <= Q3 + 1.5 * IQR)]
+
+    #drop Nombre pièce principales
+    Q1 = df['Nombre pieces principales'].quantile(0.25)
+    Q3 = df['Nombre pieces principales'].quantile(0.75)
+    IQR = Q3 - Q1
+
+    df = df[(df['Nombre pieces principales'] >= Q1 - 1.5 * IQR) & (df['Nombre pieces principales'] <= Q3 + 1.5 * IQR)]
+
+    #drop Surface terrain
+    Q1 = df['Surface terrain'].quantile(0.25)
+    Q3 = df['Surface terrain'].quantile(0.75)
+    IQR = Q3 - Q1
+
+    df = df[(df['Surface terrain'] >= Q1 - 1.5 * IQR) & (df['Surface terrain'] <= Q3 + 1.5 * IQR)]
+
+    return df
 
 #### Appel de la methode
 
@@ -107,16 +136,14 @@ def remove_outlier(df):
 #charge_ass_df(l_fichier).to_csv(path_or_buf= path + "concat.csv", sep = "|", )
 var_drop = ['No disposition', 'No voie', 'Code voie', 'Voie', 'Section','No plan','1er lot']
 df = charge_ass_df(l_fichier)
-print("sans na")
-print(df.shape)
 
 df = traiter_df(df, var_drop)
-print("na traité")
 
 df = fill_na_val(df)
-
-df = remove_outlier(df)
+#df = remove_outlier_quartile(df)
 
 print(df.shape)
-print(df.isnull().sum()/len(df) *100)
-df.to_csv(path_or_buf= path + "concat.csv", sep = "|", index= False)
+#print(df.isnull().sum()/len(df) *100)
+df.to_csv(path_or_buf= path + "concat_Outlier.csv", sep = "|", index= False)
+
+print('fini')
