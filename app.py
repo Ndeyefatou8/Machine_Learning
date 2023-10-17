@@ -22,7 +22,7 @@ url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=tru
 #print(df.columns)
 
 # Obtenez les valeurs uniques de la colonne "commune"
-commune_options = [{'label': commune, 'value': commune} for commune in df['Commune'].unique()]
+#commune_options = [{'label': commune, 'value': commune} for commune in df['Commune'].unique()]
 # Filtrez la géométrie de la France
 france = world[world['name'] == 'France']
 
@@ -56,7 +56,7 @@ sidebar = dbc.Container([
         html.H2("Filtres"),
         dbc.CardGroup([
             dbc.Label("Filtrer par commune"),
-            dcc.Dropdown(id='commune-dropdown', options=commune_options, value=commune_options[0]['value'], style={'width': '90%', 'margin-bottom': '10px'})
+           # dcc.Dropdown(id='commune-dropdown', options=commune_options, value=commune_options[0]['value'], style={'width': '90%', 'margin-bottom': '10px'})
         ]),
         dbc.CardGroup([
             dbc.Label("Filtrer par surface en m²"),
