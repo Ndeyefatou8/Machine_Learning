@@ -18,7 +18,7 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
 
 # Chargez le fichier CSV
-df = pd.read_csv(filepath_or_buffer= url ,sep='|', compression='zip')
+#df = pd.read_csv(filepath_or_buffer= url ,sep='|', compression='zip')
 #print(df.columns)
 
 # Obtenez les valeurs uniques de la colonne "commune"
