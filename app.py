@@ -6,6 +6,7 @@ import pandas as pd
 import geopandas as gpd  # Assurez-vous d'installer geopandas
 #import dash_leaflet as dl
 import plotly.express as px
+from cachetools import cached
 
 
 # Chargez le fichier CSS
@@ -21,8 +22,15 @@ url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=tru
 #df = pd.read_csv(filepath_or_buffer= url ,sep='|', compression='zip')
 #print(df.columns)
 
+@cached(maxsize=10)
+def get_df():
+    """Charge le df à partir du disque et le stocke dans la mémoire vive."""
+    return pd.read_csv(filepath_or_buffer= url ,sep='|', compression='zip')
+
+# Utilisez la fonction get_df() pour obtenir le df
+df = get_df()
 # Obtenez les valeurs uniques de la colonne "commune"
-#commune_options = [{'label': commune, 'value': commune} for commune in df['Commune'].unique()]
+commune_options = [{'label': commune, 'value': commune} for commune in df['Commune'].unique()]
 # Filtrez la géométrie de la France
 france = world[world['name'] == 'France']
 
@@ -56,7 +64,7 @@ sidebar = dbc.Container([
         html.H2("Filtres"),
         dbc.CardGroup([
             dbc.Label("Filtrer par commune"),
-           # dcc.Dropdown(id='commune-dropdown', options=commune_options, value=commune_options[0]['value'], style={'width': '90%', 'margin-bottom': '10px'})
+            dcc.Dropdown(id='commune-dropdown', options=commune_options, value=commune_options[0]['value'], style={'width': '90%', 'margin-bottom': '10px'})
         ]),
         dbc.CardGroup([
             dbc.Label("Filtrer par surface en m²"),
