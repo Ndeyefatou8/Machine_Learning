@@ -17,12 +17,15 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
 
 #url git
-url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
-@cached(maxsize=10)
+#url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
+
+# Créez un cache avec une taille maximale de 10 éléments
+my_cache = cachetools.LRUCache(maxsize=10)
+@cached(my_cache)
 def get_df():
     #Charge le df à partir du disque et le stocke dans la mémoire vive
-   #return pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat/concat.csv',sep='|')
-   return pd.read_csv(url ,sep='|', compression='zip')
+   return pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat/concat.csv',sep='|')
+   #return pd.read_csv('filepath_or_buffer= url' ,sep='|', compression='zip')
 # Utilisez la fonction get_df() pour obtenir le df
 df = get_df()
 # Chargez le fichier CSV
