@@ -21,8 +21,8 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 #@cached(maxsize=10)
 def get_df():
     #Charge le df à partir du disque et le stocke dans la mémoire vive
-   return pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat/concat.csv',sep='|')
-   #return pd.read_csv('filepath_or_buffer= url' ,sep='|', compression='zip')
+   #return pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat/concat.csv',sep='|')
+   return pd.read_csv('filepath_or_buffer= url' ,sep='|', compression='zip')
 # Utilisez la fonction get_df() pour obtenir le df
 df = get_df()
 # Chargez le fichier CSV
