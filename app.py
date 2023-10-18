@@ -18,7 +18,7 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
 #url git
 #url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
-url='https://github.com/Ndeyefatou8/Machine_Learning/blob/main/echantillon.csv'
+url='https://github.com/Ndeyefatou8/Machine_Learning/blob/main/echantillon.csv?raw=true'
 # Chargez le jeu de données depuis l'URL
 df2 = pd.read_csv(url,sep=',')
 # Créez un échantillon de 1000 lignes
