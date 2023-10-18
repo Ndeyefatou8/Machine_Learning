@@ -41,6 +41,7 @@ commune_options = [{'label': commune, 'value': commune} for commune in df2['Comm
 # Filtrez la géométrie de la France
 france = world[world['name'] == 'France']
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server 
 
 #TEST
 # Créez un exemple de données pour la courbe d'évolution (remplacez par vos données réelles)
