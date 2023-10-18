@@ -20,7 +20,7 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
 
 # Chargez le jeu de données depuis l'URL
-df = pd.read_csv(filepath_or_buffer= url,sep='|', compression='zip')
+df = pd.read_csv(url,sep='|', compression='zip')
 # Créez un échantillon de 1000 lignes
 df2 = df.sample(n=1000,random_state=42)  
 # Créez un cache avec une taille maximale de 10 éléments
