@@ -17,7 +17,7 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
 
 #url git
-#url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
+url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
 #@cached(maxsize=10)
 def get_df():
     #Charge le df à partir du disque et le stocke dans la mémoire vive
