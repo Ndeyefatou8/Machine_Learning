@@ -19,21 +19,25 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 #url git
 url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
 
+# Chargez le jeu de données depuis l'URL
+df = pd.read_csv(filepath_or_buffer= url,sep='|', compression='zip')
+# Créez un échantillon de 1000 lignes
+df2 = df.sample(n=1000,random_state=42)  
 # Créez un cache avec une taille maximale de 10 éléments
-my_cache = cachetools.LRUCache(maxsize=10)
-@cached(my_cache)
-def get_df():
+#my_cache = cachetools.LRUCache(maxsize=10)
+#@cached(my_cache)
+#def get_df():
     #Charge le df à partir du disque et le stocke dans la mémoire vive
    #return pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat/concat.csv',sep='|')
-   return pd.read_csv(url ,sep='|', compression='zip')
+ #  return pd.read_csv(url ,sep='|', compression='zip')
 # Utilisez la fonction get_df() pour obtenir le df
-df = get_df()
+#df = get_df()
 # Chargez le fichier CSV
 #df = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat/concat.csv',sep='|')
 #print(df.columns)
 
 # Obtenez les valeurs uniques de la colonne "commune"
-commune_options = [{'label': commune, 'value': commune} for commune in df['Commune'].unique()]
+commune_options = [{'label': commune, 'value': commune} for commune in df2['Commune'].unique()]
 # Filtrez la géométrie de la France
 france = world[world['name'] == 'France']
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
