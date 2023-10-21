@@ -5,8 +5,8 @@ import pandas as pd
 
 
 ### Set up
-#path = "C:/Users/pierr/Documents/1_projet_python/Valeur_fonciere/Depot_data/"
-path = "C:/Users/pterron/Documents/projet_python/Application_ml/Depot_data/"
+path = "C:/Users/pierr/Documents/1_projet_python/Valeur_fonciere/Depot_data/"
+#path = "C:/Users/pterron/Documents/projet_python/Application_ml/Depot_data/"
 
 l_fichier = [path+"valeursfoncieres-2018.txt",path+"valeursfoncieres-2019.txt",path+"valeursfoncieres-2020.txt",path+"valeursfoncieres-2021.txt"]
 
@@ -147,6 +147,59 @@ def prix_m2_region_annee(df):
 
     return prixm2_rc
 
+
+def latitude_longi(df):
+    d_type = {
+    'Commune' : 'str',
+    'Code commune' : 'float',
+    'Code departement' : 'str',
+    'Code postal' : 'str',
+    'Valeur fonciere' : 'float',
+    'Surface reelle bati' : 'float',
+    'Nombre pieces principales' : 'float',
+    'Surface terrain' : 'float'
+    }
+
+
+    df = df.astype(d_type)
+    df['Code commune'] = df['Code commune'].astype(int).astype(str)
+
+    #Import des données
+    lat = pd.read_csv(filepath_or_buffer= "C:/Users/pierr/Documents/1_projet_python/Valeur_fonciere/Depot_data/communes-departement-region.csv", sep=",", decimal=".")
+
+    lat = lat[['code_commune_INSEE','nom_commune_postal','code_postal','latitude', 'longitude','code_commune','code_departement']]
+    lat = lat.dropna(axis=0)
+
+    #Transtypage
+    d_type = {
+        'code_commune_INSEE':'str',
+        'nom_commune_postal':'str',
+        'code_postal':'float',
+        'latitude':'float',
+        'longitude':'float',
+        'code_commune':'float',
+        'code_departement':'str'
+    }
+
+
+    lat = lat.astype(d_type)
+    lat['code_commune'] = lat['code_commune'].astype(int).astype(str)
+    lat['code_postal'] = lat['code_postal'].astype(str)
+
+    lat_fu = lat[['code_departement','code_commune','code_postal', 'latitude', 'longitude']]
+    lat_fu = lat_fu.rename(columns={'code_departement': 'Code departement', 'code_commune': 'Code commune', 'code_postal' : 'Code postal'})
+
+    lat_fu.drop_duplicates(inplace = True)
+
+    #Union des deux tables
+    result = pd.merge(left=df, right=lat_fu, on=['Code departement','Code commune', 'Code postal'], how='left')
+
+    #On remplace les valeurs nulles par zero
+    values = {"latitude": 0, "longitude":0}
+    #result.fillna(value = values, inplace= True)
+    
+    return result
+
 #### Appel de la methode
 
 # Ecrire en csv (2 G0)
@@ -159,10 +212,11 @@ df = traiter_df(df, var_drop)
 df = fill_na_val(df)
 df = remove_outlier_quartile(df)
 df = prix_m2_region_annee(df)
+df = latitude_longi(df)
 
 print(df.shape)
 #print(df.isnull().sum()/len(df) *100)
-df.to_csv(path_or_buf= path + "concat_prix_m2.csv", sep = "|", index= False)
+df.to_csv(path_or_buf= path + "concat_prix_m2_lati_test.csv", sep = "|", index= False)
 
 
 print('fini')
