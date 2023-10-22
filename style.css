@@ -1,7 +1,6 @@
-/* styles.css */
 /* Styles for the side menu */
 body {
-    background-color: rgba(150, 90, 12, 0.648);
+    background-color: rgba(143, 85, 9, 0.648);
 }
 .sidebar {
     float: left;
@@ -9,4 +8,17 @@ body {
 
 .main-content {
     float: right;
+}
+/* style.css */
+.app-title {
+    background-color: #542405; /* Couleur de fond gris clair */
+    color: #ffffff; /* Couleur du texte */
+    padding: 25px; /* Marge intérieure pour l'espace autour du texte */
+    font-size: 45px; /* Taille de la police */
+    text-align: center; /* Alignement du texte au centre */
+}
+/* Ajustez la marge intérieure pour les onglets */
+#tabs {
+  
+    padding: 3px; /* Marge intérieure pour les onglets */
 }
