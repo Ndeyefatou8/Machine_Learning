@@ -32,7 +32,7 @@ url_moy_dep_l_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branc
 url_moy_dep_d_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/moy_departement_dependance_2021.csv?raw=true'
 url_prix_m2_com_region = 'https://raw.githubusercontent.com/votre-utilisateur/votre-repo/votre-chemin/prix_m2_com_region.csv?raw=true'
 url_prix_model_maison='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_maison.pkl?raw=true'
-url_prix_model_appart='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_appart.pkl?raw=true''
+url_prix_model_appart='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_appart.pkl?raw=true'
 
 
 df_prix = pd.read_csv(url_df_prix, sep='|')
