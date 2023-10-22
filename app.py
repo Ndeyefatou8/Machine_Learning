@@ -10,7 +10,7 @@ import dash_bootstrap_components as dbc  # Importez dbc
 import geopandas as gpd
 import joblib 
 import requests
-#from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder
 #import dash_daq as daq
 
 
