@@ -16,7 +16,8 @@ import certifi
 
 
 # Chargez le fichier CSS
-external_stylesheets = ['https://github.com/Ndeyefatou8/Machine_Learning/blob/main/style.css']  
+url_css='https://github.com/Ndeyefatou8/Machine_Learning/blob/main/style.css?raw=true'
+external_stylesheets = [url_css]  
 
 
 # Chargez les données depuis GitHub
@@ -90,7 +91,7 @@ page_daccueil = dbc.Container([
         ], width=6),
         dbc.Col([
             html.H2("À Propos"),
-            html.P("Bienvenue sur notre application de prédiction des prix immobiliers. Cette application vous permet d'explorer les données de valeurs foncières et de prédire les prix immobiliers à l'aide de modèles de machine learning avancés. Vous pouvez utiliser les onglets ci-dessus pour accéder à différentes fonctionnalités.")
+            html.P("Bienvenue sur notre application de prédiction des prix immobiliers.GreenTech Solutions est une société de service qui développe des applications. .Une agence immobilière sollicite l’entreprise afin d’aider ses commerciaux à mieux estimer les biens à vendre.Pour cela vous devrez développer une application permettant de mieux comprendre le marché et d’estimer le prix de vente des nouveaux biens. Goal: Estimer le montant du prix de vente d'un bien.")
         ], width=6)
         
     ])
@@ -136,7 +137,7 @@ prediction_section = html.Div([
 
 # Créez la mise en page avec les onglets
 app.layout = html.Div([
-    html.H1("Estimation des Prix Immobiliers", className="app-title"),
+    html.H1("GreenTech Solutions", className="app-title"),
     dcc.Tabs(id='tabs', value='onglet-0', children=[
         dcc.Tab(label='Accueil', value='onglet-0'),
         dcc.Tab(label='Cartographie', value='onglet-1'),
@@ -258,7 +259,7 @@ def display_content(tab):
     elif tab == 'onglet-1':
         # Gérez l'onglet Cartographie
         return dbc.Row([
-            dbc.Col(sidebar, width=3),
+            
             dbc.Col([dcc.Graph(figure=carte)], width=9,className="mx-auto")
         ])
     elif tab == 'onglet-2':
