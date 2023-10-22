@@ -11,6 +11,7 @@ import geopandas as gpd
 import joblib 
 import requests
 from sklearn.preprocessing import LabelEncoder
+import certifi
 #import dash_daq as daq
 
 
