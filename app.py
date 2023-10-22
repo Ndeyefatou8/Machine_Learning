@@ -16,8 +16,8 @@ import certifi
 
 
 # Chargez le fichier CSS
-url_css='https://github.com/Ndeyefatou8/Machine_Learning/blob/main/style.css?raw=true'
-external_stylesheets = [url_css]  
+
+external_stylesheets = ['https://github.com/Ndeyefatou8/Machine_Learning/raw/main/style.css']  
 
 
 # Chargez les données depuis GitHub
