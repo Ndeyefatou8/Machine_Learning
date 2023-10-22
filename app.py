@@ -51,8 +51,8 @@ def download_model(model_name):
 for model_name in ['reg_prix_maison', 'reg_prix_appart']:
     download_model(model_name)
     
-prix_model_maison = joblib.load('reg_prix_maison.pkl')
-prix_model_appart = joblib.load('reg_prix_appart.pkl')
+prix_model_maison = joblib.load('reg_prix_maison.pkl', protocol=2)
+prix_model_appart = joblib.load('reg_prix_appart.pkl', protocol=2)
 
 
 
