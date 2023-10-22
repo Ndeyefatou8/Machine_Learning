@@ -70,7 +70,7 @@ prix_model_appart = joblib.load('reg_prix_appart.pkl')
 
 
 # Obtenez les valeurs uniques de la colonne "commune"
-commune_options = [{'label': commune, 'value': commune} for commune in df2['Commune'].unique()]
+commune_options = [{'label': commune, 'value': commune} for commune in df_prix['Commune'].unique()]
 #  les valeurs uniques de la colonne "commune"
 region_options = [{'label': region, 'value': region} for region in df_prix['Code departement'].unique()]
 # les valeurs uniques de la colonne "Type local" depuis votre jeu de données
