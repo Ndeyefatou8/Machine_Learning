@@ -10,17 +10,39 @@ import cachetools
 from cachetools import cached
 
 # Chargez le fichier CSS
-external_stylesheets = ['styles.css']  # Remplacez 'styles.css' par le nom de votre fichier CSS
+external_stylesheets = ['https://github.com/Ndeyefatou8/Machine_Learning/blob/main/style.css']  
 
-# Charger les données géographiques de la France
-world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+# Importez les données
+#df_prix  = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat_prix_m2_lati.csv',sep='|')
+
+#carte_dep= pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/carte/carte.csv',sep=',')
+
+# moy des prix des valeurs foncieres des locaux en fonction des departements en 2021
+#moy_dep_l_2021 = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/moy_departement_locaux_2021.csv',sep=',')
+# moy des prix des valeurs foncieres des dépendances en fonction des departements en 2021
+#moy_dep_d_2021 = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/moy_departement_dependance_2021.csv',sep=',')
+
+#prix_m2_com_region = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/prix_m2_com_region.csv',sep=',')
 
 
-#url git
-#url = 'https://github.com/Pioterr/projet_sise_stock/blob/main/concat.zip?raw=true'
-url='https://github.com/Ndeyefatou8/Machine_Learning/blob/main/echantillon.csv?raw=true'
-# Chargez le jeu de données depuis l'URL
-df2 = pd.read_csv(url,sep=',')
+# Chargez les données depuis GitHub
+url_df_prix = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/concat_prix_m2_lati.zip?raw=true'
+url_carte_dep = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche_Albane/carte%2B.zip?raw=true'
+url_moy_dep_l_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/moy_departement_locaux_2021.csv?raw=true'
+url_moy_dep_d_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/moy_departement_dependance_2021.csv?raw=true'
+url_prix_m2_com_region = 'https://raw.githubusercontent.com/votre-utilisateur/votre-repo/votre-chemin/prix_m2_com_region.csv?raw=true'
+url_prix_model_maison='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_maison.pkl?raw=true'
+url_prix_model_appart='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_appart.pkl?raw=true''
+
+
+df_prix = pd.read_csv(url_df_prix, sep='|')
+carte_dep = pd.read_csv(url_carte_dep, sep=',')
+moy_dep_l_2021 = pd.read_csv(url_moy_dep_l_2021, sep=',')
+moy_dep_d_2021 = pd.read_csv(url_moy_dep_d_2021, sep=',')
+prix_m2_com_region = pd.read_csv(url_prix_m2_com_region, sep=',')
+prix_model_maison = joblib.load(url_prix_model_maison)
+prix_model_appart = joblib.load(url_prix_model_appart)
+
 # Créez un échantillon de 1000 lignes
 #df2 = df.sample(n=1000,random_state=42)  
 # Créez un cache avec une taille maximale de 10 éléments
@@ -32,35 +54,19 @@ df2 = pd.read_csv(url,sep=',')
  #  return pd.read_csv(url ,sep='|', compression='zip')
 # Utilisez la fonction get_df() pour obtenir le df
 #df = get_df()
-# Chargez le fichier CSV
-#df = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat/concat.csv',sep='|')
-#print(df.columns)
+
 
 # Obtenez les valeurs uniques de la colonne "commune"
 commune_options = [{'label': commune, 'value': commune} for commune in df2['Commune'].unique()]
-# Filtrez la géométrie de la France
-france = world[world['name'] == 'France']
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+#  les valeurs uniques de la colonne "commune"
+region_options = [{'label': region, 'value': region} for region in df_prix['Code departement'].unique()]
+# les valeurs uniques de la colonne "Type local" depuis votre jeu de données
+type_local_options = [{'label': type_local, 'value': type_local} for type_local in df_prix['Type local'].unique()]
+
+
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],suppress_callback_exceptions=True)
 server = app.server 
 
-#TEST
-# Créez un exemple de données pour la courbe d'évolution (remplacez par vos données réelles)
-annees = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
-prix_metre_carre = [2000, 2200, 2350, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 3100]
-
-## CE QU'IL FAUT FAIRE AVEC MON DATA
-#prix_metre_carre = df.groupby('Annee')['PrixM2'].mean().reset_index()  
-#courbe_evolution = dcc.Graph(figure=px.line(prix_metre_carre, x='Annee', y='PrixM2', labels={'Annee': 'Années', 'PrixM2': 'Prix du mètre carré'}, title='Évolution du Prix du Mètre Carré'))
-
-# Créez le graphique d'évolution
-courbe_evolution = dcc.Graph(figure=px.line(x=annees, y=prix_metre_carre, labels={'x': 'Années', 'y': 'Prix du mètre carré'}, title='Évolution du Prix du Mètre Carré'))
-
-# Créez la carte de la France
-fig = px.choropleth(france, 
-                    locations='iso_a3',
-                    color='pop_est',
-                    hover_name='name',
-                    color_continuous_scale=px.colors.sequential.Plasma)
 
 
 # Définissez la page d'accueil
@@ -101,7 +107,21 @@ main_content = dbc.Container([
     ])
 ],className='main-content', style={'margin-top': '2 0px'})
 
-# Créez une mise en page avec la barre latérale et la zone principale
+#  section pour la prédiction du prix de vente
+
+prediction_section = html.Div([
+    html.H2("Prédiction du Prix de Vente"),
+    dcc.Input(id='input-surface', type='number', placeholder='Entrez la surface (m²)', style={'width': '40%'}),
+    dcc.Dropdown(id='input-region', options=region_options, placeholder='Sélectionnez la région', style={'width': '50%', 'margin-top': '10px'}),
+    dcc.Dropdown(id='input-commune', options=commune_options, placeholder='Sélectionnez la commune', style={'width': '50%', 'margin-top': '10px'}),
+    dcc.Dropdown(id='input-type-local', options=type_local_options, placeholder='Sélectionnez le type local', style={'width': '50%', 'margin-top': '10px'}),
+    dbc.Button("Rechercher", id='predict-button', n_clicks=0),
+    html.Div(id='prediction-output',children=[], style={'margin-top': '20px', 'border': '1px solid #ccc', 'padding': '10px', 'border-radius': '5px', 'height': '100px'})
+
+])
+
+
+# Créez la mise en page avec les onglets
 app.layout = html.Div([
     html.H1("Estimation des Prix Immobiliers", className="app-title"),
     dcc.Tabs(id='tabs', value='onglet-0', children=[
@@ -110,9 +130,109 @@ app.layout = html.Div([
         dcc.Tab(label='Prédiction prix de vente', value='onglet-2'),
         dcc.Tab(label='Évolution', value='onglet-3'),
     ], className='app-header'),
-    html.Div(id='content'),
-    html.Div(courbe_evolution, id='content-onglet-3', style={'display': 'none'})
+    html.Div(id='content')
 ])
+
+
+# Callback pour mettre à jour le graphique en fonction de la sélection des communes
+@app.callback(
+    Output('commune-price-evolution-graph', 'figure'),
+    Input('commune-dropdown', 'value')
+)
+def update_commune_price_evolution(selected_communes):
+    if not selected_communes:
+         # Si aucune commune sélectionnée, utilisez la première ville par défaut
+        selected_communes = [df_prix['Commune'].unique()[0]]
+    # Filtrez les données en fonction des communes sélectionnées
+    filtered_data = df_prix[df_prix['Commune'].isin(selected_communes)]
+
+    # Créez le graphique d'évolution pour les communes
+    fig = px.line(filtered_data, x='year', y='Prix m2 moyen commune', color='Commune', title='Évolution du Prix du Mètre Carré par Commune')
+
+    return fig
+
+@app.callback(
+    Output('region-price-evolution-graph', 'figure'),
+    Input('depart-dropdown', 'value')
+)
+def update_region_price_evolution(selected_depart):
+    if not selected_depart:
+        # Si aucune commune sélectionnée, utilisez la première ville par défaut
+        selected_depart= [df_prix['Code departement'].unique()[0]]
+
+    # Filtrez les données en fonction des communes sélectionnées
+    data_depart = df_prix[df_prix['Code departement'].isin(selected_depart)]
+    
+    
+    # Créez le graphique d'évolution pour les communes
+    fig = px.line(data_depart, x='year', y='Prix m2 moyen region', color='Code departement', title='Évolution du Prix du Mètre Carré par Region  {}'.format(selected_depart))
+
+    # Créez le diagramme circulaire du prix moyen groupé par type local
+    #fig = px.pie(data_depart, names='Type local', values='Prix m2 moyen region',
+     #            title='Prix Moyen par Type Local pour la Commune {}'.format(selected_depart))
+    return fig
+
+@app.callback(
+    Output('typelocal-price-evolution-diagr', 'figure'),
+    Input('typelocal-dropdown', 'value'))
+#TYPE LOCAL
+def update_typelocal_price_evolution(selected_communes):
+    if not selected_communes:
+        # Si aucune commune sélectionnée, utilisez la première ville par défaut
+        selected_communes = [df_prix ['Commune'].unique()[0]]
+
+    # Filtrez les données en fonction des communes sélectionnées
+    filtered_data = df_prix [df_prix ['Commune'].isin(selected_communes)]
+    
+    # Créez le barplot du prix moyen par type local
+    fig = px.histogram(filtered_data, x='Type local', y='Prix m2 moyen commune',color='Commune',
+                 title='Prix Moyen par Type Local par Commune {}'.format(selected_communes))
+
+    return fig
+    
+#CARTOGRAPHIE
+carte = px.scatter_mapbox(carte_dep, lat="latitude", lon="longitude", hover_name="Commune", color="Code departement",hover_data=["Prix m2 moyen region", "Prix m2 moyen commune"], zoom=6, height=600)
+carte.update_layout(mapbox_style="open-street-map")
+carte.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    
+ 
+ #PREDICTON 
+
+# Callback pour la prédiction
+@app.callback(
+    Output("prediction-output", "children"),
+    Input("predict-button", "n_clicks"),
+    State("input-surface", "value"),
+    State("input-region", "value"),
+    State("input-commune", "value"),
+    State("input-type-local", "value")
+)
+def prediction(n_clicks, Surface, region, commune, Type_loc):
+    if n_clicks is not None:
+        if Surface is None or region is None or commune is None or Type_loc is None:
+            return "Veuillez remplir toutes les informations du formulaire."
+        else:
+            # Votre code de prédiction ici
+            Surface=int(Surface)
+            region=str(region)
+            commune=str(commune)
+            Type_loc=str(Type_loc)
+            
+            prix_m2 = prix_m2_com_region[(prix_m2_com_region['Commune'] == commune) & (prix_m2_com_region['Code departement'] == region)]['Prix m2 moyen commune']
+           
+            df = pd.DataFrame({'Surface reelle bati': Surface, 'Prix m2 moyen commune': prix_m2})
+            if Type_loc == 'Maison':
+                result = pd.DataFrame(prix_model_maison.predict(df)).iloc[0]
+
+            elif Type_loc == 'Appartement':
+                result = pd.DataFrame(prix_model_appart.predict(df)).iloc[0]
+            elif Type_loc == 'Dépendance':
+                result = moy_dep_d_2021[moy_dep_d_2021['Code departement'] == region]['Valeur fonciere']
+            else:
+                result = moy_dep_l_2021[moy_dep_l_2021['Code departement'] == region]['Valeur fonciere']+ 10000
+            return f"Le prix estimé est de {result.iloc[0]:.2f} €."
+    else:
+        return ""
 
 # Gérez la navigation entre les onglets
 @app.callback(
@@ -123,20 +243,36 @@ def display_content(tab):
     if tab == 'onglet-0':
         return [page_daccueil]
     elif tab == 'onglet-1':
+        # Gérez l'onglet Cartographie
         return dbc.Row([
             dbc.Col(sidebar, width=3),
-            dbc.Col([dcc.Graph(figure=fig, id='map-plot')], width=9)
+            dbc.Col([dcc.Graph(figure=carte)], width=9)
         ])
     elif tab == 'onglet-2':
+        # Gérez l'onglet Prédiction prix de vente
         return dbc.Row([
-            dbc.Col(sidebar, width=3),
-            dbc.Col([html.P("Contenu de l'onglet 2")], width=9)
+            dbc.Col([prediction_section], width=9, className="mx-auto")
         ])
     elif tab == 'onglet-3':
+        # Gérez l'onglet Évolution
         return dbc.Row([
-            dbc.Col(sidebar,width=3),
-            dbc.Col([courbe_evolution], width=9)
+            dbc.Col([
+                html.Label("Sélectionnez les Communes"),
+                dcc.Dropdown(id='commune-dropdown', options=commune_options, multi=True, value=[]),
+                dcc.Graph(id='commune-price-evolution-graph')
+            ], width=6),
+            dbc.Col([
+                html.Label("Sélectionnez les départements"),
+                dcc.Dropdown(id='depart-dropdown', options=region_options , multi=True, value=[]),
+                dcc.Graph(id='region-price-evolution-graph')  
+            ], width=6),
+            dbc.Col([
+                html.Label("Sélectionnez les Communes"),
+                dcc.Dropdown(id='typelocal-dropdown', options=commune_options , multi=True, value=[]),
+                dcc.Graph(id='typelocal-price-evolution-diagr')  
+            ], width=6)
         ])
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
