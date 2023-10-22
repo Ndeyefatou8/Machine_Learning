@@ -124,9 +124,11 @@ def prix_m2_region_annee(df):
     df['year'] = df['Date mutation'].dt.year
     df = df.drop(labels='Date mutation', axis=1)
 
+    #On calcul ce prix hors dépendances
     df_m2 = df[df['Type local'] != 'Dépendance']
     df_m2 = df_m2[df_m2['Surface reelle bati']!=0]
 
+    #Calcul du prix au m²
     df_m2['prix_m2'] = df_m2['Valeur fonciere'] / df_m2['Surface reelle bati']
     
     #Prix departement
@@ -139,7 +141,7 @@ def prix_m2_region_annee(df):
     df_com = pd.DataFrame(com['prix_m2'].mean())
     df_com = df_com.rename(columns={'prix_m2': 'Prix m2 moyen commune'})
 
-
+    #Fusion des dataset
     prixm2_r = pd.merge(left=df, right=df_dep, on=['Code departement','year'], how='left')
     prixm2_rc = pd.merge(left=prixm2_r, right=df_com, on=['Commune','Code departement', 'year'], how='left')
 
@@ -149,6 +151,7 @@ def prix_m2_region_annee(df):
 
 
 def latitude_longi(df):
+    # Ajout des latitude longitude
     d_type = {
     'Commune' : 'str',
     'Code commune' : 'float',
@@ -186,6 +189,7 @@ def latitude_longi(df):
     lat['code_commune'] = lat['code_commune'].astype(int).astype(str)
     lat['code_postal'] = lat['code_postal'].astype(str)
 
+    #Renommage des colonnes
     lat_fu = lat[['code_departement','code_commune','code_postal', 'latitude', 'longitude']]
     lat_fu = lat_fu.rename(columns={'code_departement': 'Code departement', 'code_commune': 'Code commune', 'code_postal' : 'Code postal'})
 
