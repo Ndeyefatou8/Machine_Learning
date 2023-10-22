@@ -1,6 +1,6 @@
 import dash
 from dash import dcc, html
-import dash_daq as daq
+#import dash_daq as daq
 import plotly.graph_objects as go
 import pandas as pd
 from dash.dependencies import Input, Output,State
@@ -9,8 +9,8 @@ import plotly.express as px
 import dash_bootstrap_components as dbc  # Importez dbc
 import geopandas as gpd
 import joblib 
-from sklearn.preprocessing import LabelEncoder
-import dash_daq as daq
+#from sklearn.preprocessing import LabelEncoder
+#import dash_daq as daq
 
 
 # Chargez le fichier CSS
