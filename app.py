@@ -26,7 +26,7 @@ url_carte_dep = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/c
 url_moy_dep_l_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/moy_departement_locaux_2021.csv?raw=true'
 url_moy_dep_d_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/moy_departement_dependance_2021.csv?raw=true'
 url_prix_m2_com_region = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/prix_m2_com_region.csv?raw=true'
-url_prix_m2_com_region = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/prix_m2_com_region_allyear.csv?raw=true'
+url_prix_m2_com_region_allyear = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/prix_m2_com_region_allyear.csv?raw=true'
 # Spécifiez les URL bruts des modèles
 url_model_maison = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/reg_prix_maison.pkl?raw=true'
 url_model_appart = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/reg_prix_appart.pkl?raw=true'
@@ -40,6 +40,7 @@ carte_dep = pd.read_csv(filepath_or_buffer=url_carte_dep, sep=',', compression='
 moy_dep_l_2021 = pd.read_csv(filepath_or_buffer=url_moy_dep_l_2021, sep='|')
 moy_dep_d_2021 = pd.read_csv(filepath_or_buffer=url_moy_dep_d_2021, sep='|')
 prix_m2_com_region = pd.read_csv(filepath_or_buffer=url_prix_m2_com_region, sep=',')
+prix_m2_com_region_allyear = pd.read_csv(filepath_or_buffer=url_prix_m2_com_region_allyear, sep=',')
 
 
 
