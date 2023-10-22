@@ -17,7 +17,7 @@ import certifi
 
 # Chargez le fichier CSS
 
-external_stylesheets = ['https://raw.githubusercontent.com/Ndeyefatou8/Machine_Learning/main/style.css']  
+#external_stylesheetscss = ['https://raw.githubusercontent.com/Ndeyefatou8/Machine_Learning/main/style.css']  
 
 
 # Chargez les données depuis GitHub
@@ -81,6 +81,8 @@ type_local_options = [{'label': type_local, 'value': type_local} for type_local 
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],suppress_callback_exceptions=True)
+# Ajoutez votre propre CSS ici
+app.css.append_css({'external_url': 'https://raw.githubusercontent.com/Ndeyefatou8/Machine_Learning/main/style.css'})
 server = app.server 
 
 
