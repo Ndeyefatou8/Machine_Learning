@@ -21,10 +21,10 @@ external_stylesheets = ['https://github.com/Ndeyefatou8/Machine_Learning/blob/ma
 
 # Chargez les données depuis GitHub
 url_df_prix = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/echantillon.csv?raw=true'
-url_carte_dep = 'https://github.com/Ndeyefatou8/Machine_Learning/tree/main/csv/carte%2B.zip?raw=true'
-url_moy_dep_l_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/tree/main/csv/moy_departement_locaux_2021.csv?raw=true'
-url_moy_dep_d_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/tree/main/csv/moy_departement_dependance_2021.csv?raw=true'
-url_prix_m2_com_region = 'https://github.com/Ndeyefatou8/Machine_Learning/tree/main/csv/prix_m2_com_region.csv?raw=true'
+url_carte_dep = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/carte%2B.zip?raw=true'
+url_moy_dep_l_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/moy_departement_locaux_2021.csv?raw=true'
+url_moy_dep_d_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/moy_departement_dependance_2021.csv?raw=true'
+url_prix_m2_com_region = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/csv/prix_m2_com_region.csv?raw=true'
 # Spécifiez les URL bruts des modèles
 url_model_maison = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/reg_prix_maison.pkl?raw=true'
 url_model_appart = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/reg_prix_appart.pkl?raw=true'
