@@ -6,3 +6,4 @@ plotly
 gunicorn
 dash-tools
 cachetools
+joblib 
