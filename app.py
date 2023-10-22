@@ -9,6 +9,7 @@ import plotly.express as px
 import dash_bootstrap_components as dbc  # Importez dbc
 import geopandas as gpd
 import joblib 
+import requests
 #from sklearn.preprocessing import LabelEncoder
 #import dash_daq as daq
 
@@ -16,36 +17,39 @@ import joblib
 # Chargez le fichier CSS
 external_stylesheets = ['https://github.com/Ndeyefatou8/Machine_Learning/blob/main/style.css']  
 
-# Importez les données
-#df_prix  = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/concat_prix_m2_lati.csv',sep='|')
-
-#carte_dep= pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/carte/carte.csv',sep=',')
-
-# moy des prix des valeurs foncieres des locaux en fonction des departements en 2021
-#moy_dep_l_2021 = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/moy_departement_locaux_2021.csv',sep=',')
-# moy des prix des valeurs foncieres des dépendances en fonction des departements en 2021
-#moy_dep_d_2021 = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/moy_departement_dependance_2021.csv',sep=',')
-
-#prix_m2_com_region = pd.read_csv('C:/Users/HP/Desktop/Master2-SISE/Machine-Learning/Dash/prix_m2_com_region.csv',sep=',')
-
 
 # Chargez les données depuis GitHub
 url_df_prix = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/echantillon.csv?raw=true'
 url_carte_dep = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche_Albane/carte%2B.zip?raw=true'
 url_moy_dep_l_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/moy_departement_locaux_2021.csv?raw=true'
 url_moy_dep_d_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/moy_departement_dependance_2021.csv?raw=true'
-url_prix_m2_com_region = 'https://raw.githubusercontent.com/votre-utilisateur/votre-repo/votre-chemin/prix_m2_com_region.csv?raw=true'
-url_prix_model_maison='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_maison.pkl?raw=true'
-url_prix_model_appart='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_appart.pkl?raw=true'
+url_prix_m2_com_region = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche_Fatou/prix_m2_com_region.csv?raw=true'
+# Spécifiez les URL bruts des modèles
+url_model_maison = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_maison.pkl?raw=true'
+url_model_appart = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_appart.pkl?raw=true'
+
+#url_model_maison='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_maison.pkl?raw=true'
+#url_model_appart='https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/reg_prix_appart.pkl?raw=true'
 
 
-df_prix = pd.read_csv(url_df_prix, sep='|')
-carte_dep = pd.read_csv(url_carte_dep, sep=',', compression='zip')
-moy_dep_l_2021 = pd.read_csv(url_moy_dep_l_2021, sep=',')
-moy_dep_d_2021 = pd.read_csv(url_moy_dep_d_2021, sep=',')
-prix_m2_com_region = pd.read_csv(url_prix_m2_com_region, sep=',')
-prix_model_maison = joblib.load(url_prix_model_maison)
-prix_model_appart = joblib.load(url_prix_model_appart)
+df_prix = pd.read_csv(url_df_prix, sep=',')
+carte_dep = pd.read_csv(filepath_or_buffer=url_carte_dep, sep=',', compression='zip')
+moy_dep_l_2021 = pd.read_csv(filepath_or_buffer=url_moy_dep_l_2021, sep='|')
+moy_dep_d_2021 = pd.read_csv(filepath_or_buffer=url_moy_dep_d_2021, sep='|')
+prix_m2_com_region = pd.read_csv(filepath_or_buffer=url_prix_m2_com_region, sep=',')
+
+
+
+response_prix_model_maison = requests.get(url_model_maison,verify=False)
+response_prix_model_appart = requests.get(url_model_appart,verify=False)
+
+with open('reg_prix_maison.pkl', 'wb') as f:
+    f.write(response_prix_model_maison.content)
+with open('reg_prix_appart.pkl', 'wb') as f:
+    f.write(response_prix_model_appart.content)
+prix_model_maison = joblib.load('reg_prix_maison.pkl')
+prix_model_appart = joblib.load('reg_prix_appart.pkl')
+
 
 # Créez un échantillon de 1000 lignes
 #df2 = df.sample(n=1000,random_state=42)  
