@@ -102,7 +102,7 @@ sidebar = dbc.Container([
         html.H2("Filtres"),
         dbc.CardGroup([
             dbc.Label("Filtrer par commune"),
-            dcc.Checklist(id='commune-checklist', options=commune_options, value=[]),
+            dcc.Dropdown(id='commune-dropdown', options=commune_options, value=[]),
         ]),
         dbc.CardGroup([
             dbc.Label("Filtrer par surface en m²"),
@@ -155,9 +155,9 @@ app.layout = html.Div([
 def update_commune_price_evolution(selected_communes):
     if not selected_communes:
          # Si aucune commune sélectionnée, utilisez la première ville par défaut
-        selected_communes = [df_prix['Commune'].unique()[0]]
+        selected_communes = [prix_m2_com_region['Commune'].unique()[0]]
     # Filtrez les données en fonction des communes sélectionnées
-    filtered_data = df_prix[df_prix['Commune'].isin(selected_communes)]
+    filtered_data = prix_m2_com_region[prix_m2_com_region['Commune'].isin(selected_communes)]
 
     # Créez le graphique d'évolution pour les communes
     fig = px.line(filtered_data, x='year', y='Prix m2 moyen commune', color='Commune', title='Évolution du Prix du Mètre Carré par Commune')
@@ -171,10 +171,10 @@ def update_commune_price_evolution(selected_communes):
 def update_region_price_evolution(selected_depart):
     if not selected_depart:
         # Si aucune commune sélectionnée, utilisez la première ville par défaut
-        selected_depart= [df_prix['Code departement'].unique()[0]]
+        selected_depart= [prix_m2_com_region['Code departement'].unique()[0]]
 
     # Filtrez les données en fonction des communes sélectionnées
-    data_depart = df_prix[df_prix['Code departement'].isin(selected_depart)]
+    data_depart = prix_m2_com_region[prix_m2_com_region['Code departement'].isin(selected_depart)]
     
     
     # Créez le graphique d'évolution pour les communes
@@ -259,7 +259,7 @@ def display_content(tab):
         # Gérez l'onglet Cartographie
         return dbc.Row([
             dbc.Col(sidebar, width=3),
-            dbc.Col([dcc.Graph(figure=carte)], width=9)
+            dbc.Col([dcc.Graph(figure=carte)], width=9,className="mx-auto")
         ])
     elif tab == 'onglet-2':
         # Gérez l'onglet Prédiction prix de vente
