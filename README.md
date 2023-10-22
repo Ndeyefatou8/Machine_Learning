@@ -4,6 +4,8 @@ Voici notre projet de python, dont le but était de developper une application d
 
 L'application est hebergé ici : **https://machine-learning2-dciz.onrender.com/**
 
+Le script de l'application s'appelle **app.py**
+
 Vous pourrez trouver les CSV brutes de données utilisés dans l'application dans le dossier **CSV**
 
 Concernant la documentation, dans le dossier **rapport_doc** :
