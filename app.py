@@ -116,7 +116,7 @@ sidebar = dbc.Container([
 # Créez une zone principale pour afficher le graphique
 main_content = dbc.Container([
     dbc.Col([
-        dcc.Graph(figure=fig, id='map-plot')
+        dcc.Graph(id='price-evolution-graph', figure={})
     ])
 ],className='main-content', style={'margin-top': '2 0px'})
 
