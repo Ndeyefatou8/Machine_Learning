@@ -30,7 +30,7 @@ external_stylesheets = ['https://github.com/Ndeyefatou8/Machine_Learning/blob/ma
 
 
 # Chargez les données depuis GitHub
-url_df_prix = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/concat_prix_m2_lati.zip?raw=true'
+url_df_prix = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/main/echantillon.csv?raw=true'
 url_carte_dep = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche_Albane/carte%2B.zip?raw=true'
 url_moy_dep_l_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/moy_departement_locaux_2021.csv?raw=true'
 url_moy_dep_d_2021 = 'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/moy_departement_dependance_2021.csv?raw=true'
@@ -40,7 +40,7 @@ url_prix_model_appart='https://github.com/Ndeyefatou8/Machine_Learning/blob/bran
 
 
 df_prix = pd.read_csv(url_df_prix, sep='|')
-carte_dep = pd.read_csv(url_carte_dep, sep=',')
+carte_dep = pd.read_csv(url_carte_dep, sep=',', compression='zip')
 moy_dep_l_2021 = pd.read_csv(url_moy_dep_l_2021, sep=',')
 moy_dep_d_2021 = pd.read_csv(url_moy_dep_d_2021, sep=',')
 prix_m2_com_region = pd.read_csv(url_prix_m2_com_region, sep=',')
