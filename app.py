@@ -41,15 +41,19 @@ prix_m2_com_region = pd.read_csv(filepath_or_buffer=url_prix_m2_com_region, sep=
 
 
 
-response_prix_model_maison = requests.get(url_model_maison,verify=False)
-response_prix_model_appart = requests.get(url_model_appart,verify=False)
 
-with open('reg_prix_maison.pkl', 'wb') as f:
-    f.write(response_prix_model_maison.content)
-with open('reg_prix_appart.pkl', 'wb') as f:
-    f.write(response_prix_model_appart.content)
+def download_model(model_name):
+    url = f'https://github.com/Ndeyefatou8/Machine_Learning/blob/branche-pierre/{model_name}.pkl?raw=true'
+    response = requests.get(url, verify=False)
+
+    with open(f'{model_name}.pkl', 'wb') as f:
+        f.write(response.content)
+for model_name in ['reg_prix_maison', 'reg_prix_appart']:
+    download_model(model_name)
+    
 prix_model_maison = joblib.load('reg_prix_maison.pkl')
 prix_model_appart = joblib.load('reg_prix_appart.pkl')
+
 
 
 # Créez un échantillon de 1000 lignes
