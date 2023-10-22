@@ -8,3 +8,4 @@ dash-tools
 cachetools
 joblib 
 requests
+sklearn
