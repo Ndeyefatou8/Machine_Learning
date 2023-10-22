@@ -1,13 +1,17 @@
 import dash
 from dash import dcc, html
-import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output
+import dash_daq as daq
+import plotly.graph_objects as go
 import pandas as pd
-import geopandas as gpd  # Assurez-vous d'installer geopandas
-#import dash_leaflet as dl
+from dash.dependencies import Input, Output,State
+import dash_core_components as dcc
 import plotly.express as px
-import cachetools
-from cachetools import cached
+import dash_bootstrap_components as dbc  # Importez dbc
+import geopandas as gpd
+import joblib 
+from sklearn.preprocessing import LabelEncoder
+import dash_daq as daq
+
 
 # Chargez le fichier CSS
 external_stylesheets = ['https://github.com/Ndeyefatou8/Machine_Learning/blob/main/style.css']  
